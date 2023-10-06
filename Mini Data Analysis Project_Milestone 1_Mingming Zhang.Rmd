@@ -1,0 +1,330 @@
+---
+title: "Mini Data-Analysis Deliverable 1"
+output: html_document
+---
+
+# Welcome to your (maybe) first-ever data analysis project!
+
+And hopefully the first of many. Let's get started:
+
+1.  Install the [`datateachr`](https://github.com/UBC-MDS/datateachr) package by typing the following into your **R terminal**:
+
+#I tried to run the terminal but errors like "syntax error near unexpected token" happened, so I switched to use a Markdown to download the packages and this time it worked well.
+install.packages("devtools")
+devtools::install_github("UBC-MDS/datateachr")
+
+2.  Load the packages below.
+
+```{r}
+library(datateachr)
+library(tidyverse)
+```
+
+3.  Make a repository in the <https://github.com/stat545ubc-2023> Organization. You can do this by following the steps found on canvas in the entry called [MDA: Create a repository](https://canvas.ubc.ca/courses/126199/pages/mda-create-a-repository). One completed, your repository should automatically be listed as part of the stat545ubc-2023 Organization.
+
+# Instructions
+
+## For Both Milestones
+
+-   Each milestone has explicit tasks. Tasks that are more challenging will often be allocated more points.
+
+-  Each milestone will be also graded for reproducibility, cleanliness, and coherence of the overall Github submission. 
+
+- While the two milestones will be submitted as independent deliverables, the analysis itself is a continuum - think of it as two chapters to a story. Each chapter, or in this case, portion of your analysis, should be easily followed through by someone unfamiliar with the content. [Here](https://swcarpentry.github.io/r-novice-inflammation/06-best-practices-R/) is a good resource for what constitutes "good code". Learning good coding practices early in your career will save you hassle later on!
+
+- The milestones will be equally weighted. 
+
+## For Milestone 1
+
+**To complete this milestone**, edit [this very `.Rmd` file](https://raw.githubusercontent.com/UBC-STAT/stat545.stat.ubc.ca/master/content/mini-project/mini-project-1.Rmd) directly. Fill in the sections that are tagged with `<!--- start your work below --->`.
+
+**To submit this milestone**, make sure to knit this `.Rmd` file to an `.md` file by changing the YAML output settings from `output: html_document` to `output: github_document`. Commit and push all of your work to the mini-analysis GitHub repository you made earlier, and tag a release on GitHub. Then, submit a link to your tagged release on canvas.
+
+**Points**: This milestone is worth 36 points: 30 for your analysis, and 6 for overall reproducibility, cleanliness, and coherence of the Github submission. 
+
+# Learning Objectives
+
+By the end of this milestone, you should:
+
+-   Become familiar with your dataset of choosing
+-   Select 4 questions that you would like to answer with your data
+-   Generate a reproducible and clear report using R Markdown
+-   Become familiar with manipulating and summarizing your data in tibbles using `dplyr`, with a research question in mind.
+
+# Task 1: Choose your favorite dataset 
+
+The `datateachr` package by Hayley Boyce and Jordan Bourak currently composed of 7 semi-tidy datasets for educational purposes. Here is a brief description of each dataset:
+
+-   *apt_buildings*: Acquired courtesy of The City of Toronto's Open Data Portal. It currently has 3455 rows and 37 columns.
+
+-   *building_permits*: Acquired courtesy of The City of Vancouver's Open Data Portal. It currently has 20680 rows and 14 columns.
+
+-   *cancer_sample*: Acquired courtesy of UCI Machine Learning Repository. It currently has 569 rows and 32 columns.
+
+-   *flow_sample*: Acquired courtesy of The Government of Canada's Historical Hydrometric Database. It currently has 218 rows and 7 columns.
+
+-   *parking_meters*: Acquired courtesy of The City of Vancouver's Open Data Portal. It currently has 10032 rows and 22 columns.
+
+-   *steam_games*: Acquired courtesy of Kaggle. It currently has 40833 rows and 21 columns.
+
+-   *vancouver_trees*: Acquired courtesy of The City of Vancouver's Open Data Portal. It currently has 146611 rows and 20 columns.
+
+**Things to keep in mind**
+
+-   We hope that this project will serve as practice for carrying our your own *independent* data analysis. Remember to comment your code, be explicit about what you are doing, and write notes in this markdown document when you feel that context is required. As you advance in the project, prompts and hints to do this will be diminished - it'll be up to you!
+
+-   Before choosing a dataset, you should always keep in mind **your goal**, or in other ways, *what you wish to achieve with this data*. This mini data-analysis project focuses on *data wrangling*, *tidying*, and *visualization*. In short, it's a way for you to get your feet wet with exploring data on your own.
+
+And that is exactly the first thing that you will do!
+
+1.1 **(1 point)** Out of the 7 datasets available in the `datateachr` package, choose **4** that appeal to you based on their description. Write your choices below:
+
+**Note**: We encourage you to use the ones in the `datateachr` package, but if you have a dataset that you'd really like to use, you can include it here. But, please check with a member of the teaching team to see whether the dataset is of appropriate complexity. Also, include a **brief** description of the dataset here to help the teaching team understand your data.
+
+<!-------------------------- Start your work below ---------------------------->
+
+1: CHOICE_1_cancer_sample
+2: CHOICE_2_flow_sample
+3: CHOICE_3_vancouver_trees
+4: CHOICE_4_apt_buildings
+
+<!----------------------------------------------------------------------------->
+
+1.2 **(6 points)** One way to narrowing down your selection is to *explore* the datasets. Use your knowledge of dplyr to find out at least *3* attributes about each of these datasets (an attribute is something such as number of rows, variables, class type...). The goal here is to have an idea of *what the data looks like*.
+
+*Hint:* This is one of those times when you should think about the cleanliness of your analysis. I added a single code chunk for you below, but do you want to use more than one? Would you like to write more comments outside of the code chunk?
+
+<!-------------------------- Start your work below ---------------------------->
+
+
+###Explore Here###
+### Exploration for cancer_sample dataset:
+  * **Numbers of Rows and Columns (size):** cancer_sample dataset has 569 rows, 32 column variables.
+  * **Data types:** Most of the columns are numeric (dbl). Only "diagnosis" Column is character (chr).
+  * **Missing values:** There is no NA value in the cancer_sample dataset, which means this dataset is pretty tidy!
+  * **Order the data with diagnosis, Benign go first, then Malignant. There are 212 malignant diagnosis 
+```{r}
+glimpse(cancer_sample) #To get a glimpse of the data
+print(any(is.na(cancer_sample))) #To test if any missing value in the dataset
+arrange(cancer_sample,diagnosis) #To order rows using column values
+filter(cancer_sample,diagnosis=="M") #To filter malignant diagnosis
+```
+### Exploration for flow_sample dataset:
+  * **Number of Rows and Columns (size):** flow_sample dataset has 218 rows, 7 column variables.
+  * **Data types:** Some columns are shown as character (chr) like extreme_type column, but most are numeric data types (dbl). 
+  * **Missing values:** Some columns like sym contains NA values.
+```{r}
+glimpse(flow_sample) #To get a glimpse of the data
+print(any(is.na(flow_sample))) #To test if any missing value in the dataset
+```
+### Exploration for vancouver_trees dataset:
+  * **Number of Rows and Columns (size):** vancouver_trees dataset has 146,611 rows, 20 column variables.
+  * **Data types:** Most columns are character (chr), but also includes numeric data types (dbl). One column includes data type as "date" (date)
+  * **Missing values:** Some columns like cultivar_name contains NA values.
+  * **Order the data with diameter, and filter the ones more than 60. There are 64 trees with a diameter more than 60 
+```{r}
+glimpse(vancouver_trees) #To get a glimpse of the data
+print(any(is.na(vancouver_trees))) #To test if any missing value in the dataset
+arrange(vancouver_trees,diameter) #To order the data with diameter
+filter(vancouver_trees,diameter>60) #To filter trees with diameters more than 60
+```
+### Exploration for apt_buildings dataset:
+  * **Number of Rows and Columns (size):** apt_buildings dataset has 3,455 rows, 37 column variables.
+  * **Data types:** Include both character (chr),and numeric data types (dbl).
+  * **Missing values:** Some columns contains NA values, if we need to explore further, we need to tidy the dataset.
+  * **Order the data with emergency_power, and filter the ones do not have. There are 1,928 apts without emergency power
+```{r}
+glimpse(apt_buildings) #To get a glimpse of the data
+print(any(is.na(apt_buildings))) #To test if any missing value in the dataset
+arrange(apt_buildings,emergency_power) #To order the data with emergency_power
+filter(apt_buildings,emergency_power=="NO")
+```
+
+<!----------------------------------------------------------------------------->
+
+1.3 **(1 point)** Now that you've explored the 4 datasets that you were initially most interested in, let's narrow it down to 1. What lead you to choose this one? Briefly explain your choice below.
+
+<!-------------------------- Start your work below ---------------------------->
+**Answer for Question 1.3:**
+I would be more interested in the cancer_dataset. This dataset provides a combination of methods describing the features of cancers, I'm curious to find out how those features may affect the diagnosis of cancer cells.  
+<!----------------------------------------------------------------------------->
+
+1.4 **(2 points)** Time for a  final decision! Going back to the beginning, it's important to have an *end goal* in mind. For example, if I had chosen the `titanic` dataset for my project, I might've wanted to explore the relationship between survival and other variables. Try to think of 1 research question that you would want to answer with your dataset. Note it down below.
+
+<!-------------------------- Start your work below ---------------------------->
+**Answer for Question 1.4:**
+I had chosen the 'cancer_dataset' for my project. I might've wanted to explore the relationship between "smoothness" of the tumer and the malignant diagnosis.
+<!----------------------------------------------------------------------------->
+
+# Important note
+
+Read Tasks 2 and 3 *fully* before starting to complete either of them. Probably also a good point to grab a coffee to get ready for the fun part!
+
+This project is semi-guided, but meant to be *independent*. For this reason, you will complete tasks 2 and 3 below (under the **START HERE** mark) as if you were writing your own exploratory data analysis report, and this guidance never existed! Feel free to add a brief introduction section to your project, format the document with markdown syntax as you deem appropriate, and structure the analysis as you deem appropriate. If you feel lost, you can find a sample data analysis [here](https://www.kaggle.com/headsortails/tidy-titarnic) to have a better idea. However, bear in mind that it is **just an example** and you will not be required to have that level of complexity in your project.
+
+# Task 2: Exploring your dataset 
+
+If we rewind and go back to the learning objectives, you'll see that by the end of this deliverable, you should have formulated *4* research questions about your data that you may want to answer during your project. However, it may be handy to do some more exploration on your dataset of choice before creating these questions - by looking at the data, you may get more ideas. **Before you start this task, read all instructions carefully until you reach START HERE under Task 3**.
+
+2.1 **(12 points)** Complete *4 out of the following 8 exercises* to dive deeper into your data. All datasets are different and therefore, not all of these tasks may make sense for your data - which is why you should only answer *4*. 
+
+Make sure that you're using dplyr and ggplot2 rather than base R for this task. Outside of this project, you may find that you prefer using base R functions for certain tasks, and that's just fine! But part of this project is for you to practice the tools we learned in class, which is dplyr and ggplot2.
+
+1.  Plot the distribution of a numeric variable.
+2.  Create a new variable based on other variables in your data (only if it makes sense)
+3.  Investigate how many missing values there are per variable. Can you find a way to plot this?
+4.  Explore the relationship between 2 variables in a plot.
+5.  Filter observations in your data according to your own criteria. Think of what you'd like to explore - again, if this was the `titanic` dataset, I may want to narrow my search down to passengers born in a particular year...
+6.  Use a boxplot to look at the frequency of different observations within a single variable. You can do this for more than one variable if you wish!
+7.  Make a new tibble with a subset of your data, with variables and observations that you are interested in exploring.
+8.  Use a density plot to explore any of your variables (that are suitable for this type of plot).
+
+2.2 **(4 points)** For each of the 4 exercises that you complete, provide a *brief explanation* of why you chose that exercise in relation to your data (in other words, why does it make sense to do that?), and sufficient comments for a reader to understand your reasoning and code.
+
+<!-------------------------- Start your work below ---------------------------->
+**Exercises 1**: Plot the distribution of smoothness_mean
+**Brief Explanation for Exercise 1**
+The reason I explore the distribution of smoothness_mean using a histogram to view which smoothness level have a higher concentration of cancers. This information is evaluated for a general status of tumor samples. 
+
+```{r Exercise1-Smoothness-mean-histogram}
+library(ggplot2)
+library(dplyr)
+glimpse(cancer_sample)
+SM_mean_hg <- ggplot(cancer_sample, aes(smoothness_mean)) +
+  geom_histogram(bins = 30,fill = "purple") +
+  labs(title = "Histogram of Smoothness Mean",
+       x = "Mean Smoothness",
+       y = "Counts") 
+print(SM_mean_hg)
+```
+##Observation of Exercise 1:
+Most of the samples in the dataset have a smoothness level around 0.100. Based on the knowledge we know, the smoother the tumor is, the less risk of being malignant. However, we cannot tell what the relationship between the values provided in the dataset to the real appearance of the samples.
+
+### Exercise 6: Use boxplots to show the difference observed between Benign and Malignant groups based on Smooth level
+I would like to see whether there will be any difference between benign and malignant groups in "smooth" characters.And I also would like to know how the samples are distributed.
+```{r Exercise6-1-Smoothness-mean-boxplot-combined-violin}
+SM_mean_boxplot <- ggplot(cancer_sample, aes(x=diagnosis, y=smoothness_mean, fill = diagnosis)) +
+  geom_boxplot(alpha = 0.5) +
+  scale_fill_manual(values = c("M" = "orange", "B" = "grey"))+ 
+  geom_violin(alpha = 0.5,linewidth=0.08)+
+  labs(title = "Boxplot of Smoothness_mean for Diagnosis",
+       x= "Diagnosis",
+       y= "Frequency of Smoothness_mean") 
+print(SM_mean_boxplot)
+
+```
+### Exercise 6: Use boxplots to show the difference observed between Benign and Malignant groups based on Smooth level
+
+```{r Exercise6-2-Smoothness-worst-boxplot}
+SM_worst_boxplot <- ggplot(cancer_sample, aes(x=diagnosis, y=smoothness_worst, fill = diagnosis)) +
+  geom_boxplot(alpha = 0.5) +
+  scale_fill_manual(values = c("M" = "orange", "B" = "grey"))+ 
+  geom_violin(alpha = 0.5,linewidth=0.08)+
+  labs(title = "Boxplot of Smoothness_worst for Diagnosis",
+       x= "Diagnosis",
+       y= "Frequency of Smoothness_worst") 
+print(SM_worst_boxplot)
+
+```
+## Observation of Exercise 6:
+In malignant group, samples are have a higher smooth value than the benign group. However, from the dataset, we cannot not tell what the valves of smoothness mean, which means from the values we cannot tell which one is smoother than the others. So the results can only show the difference based on the values.
+
+###Exercise 7: Make a new tibble with a subset of the data for smoothness
+```{r Exercise7-New-Tibble}
+# create a new tibble with the the following selected variables
+SM_Subset <- cancer_sample %>%
+  select(ID,diagnosis,smoothness_mean,smoothness_se,smoothness_worst)
+SM_Subset
+
+# group the tibble by diagnosis
+SM_Sum <- SM_Subset %>%
+  group_by(diagnosis) %>%
+  # add some new variables
+  summarize(
+    num_sample = n(),
+    M_num = sum(diagnosis == "M"),
+    B_num = sum(diagnosis == "B")
+  )
+
+SM_Sum
+
+```
+
+##Observation of Exercise 7:
+In the cancer_dataset, there are more benign samples than malignant samples. The samples are not balanced.If we need to explore further, we need to pair the samples or use other methods to make the number balance.
+
+### Exercise 8: Use density plot to explore the smoothness_worst as extreme cases
+I would like to explore the smooth status in the extreme cases
+
+```{r Exercise8-Smoothness-worst-density-plot}
+SM_worst_Dplot <- ggplot(cancer_sample, aes(x = smoothness_worst, fill = diagnosis)) +
+  geom_density(alpha = 0.5) + 
+  labs( title = "Density Plot of Worst Radius") +
+  scale_fill_manual(values = c("M" = "orange", "B" = "grey"))
+print(SM_worst_Dplot)
+```
+
+## observation of Exercise 8:
+A higher density is observed in malignant (M) group. We can suspect that the smooth level is a factor that affecting cancer diagnosis, however, more tests are needed to be done for a comfirmation.
+
+
+<!----------------------------------------------------------------------------->
+
+# Task 3: Choose research questions 
+
+**(4 points)** So far, you have chosen a dataset and gotten familiar with it through exploring the data. You have also brainstormed one research question that interested you (Task 1.4).  Now it's time to pick 4 research questions that you would like to explore in Milestone 2! Write the 4 questions and any additional comments below. 
+
+<!--- *****START HERE***** --->
+ **Task 3 Answers:**
+  
+  1. Are the smoothness related to the compactness features? If so, how strong they are related and how to use them to predict cancer diagnosis?
+  
+  2. Can the values in each column reflect the tumor status? If in the real research field, how should we evaluate these values?
+  
+  3. In spite of smoothness, what else can we select to predict tumors? and how to compare the new one with smoothness?
+  
+  4. How are the values different in benign group? Can we find any clue from the values that can predict it before it turns to malignant?
+  
+<!----------------------------->
+
+# Overall reproducibility/Cleanliness/Coherence Checklist 
+
+## Coherence (0.5 points)
+
+The document should read sensibly from top to bottom, with no major continuity errors. An example of a major continuity error is having a data set listed for Task 3 that is not part of one of the data sets listed in Task 1. 
+
+## Error-free code (3 points) 
+
+For full marks, all code in the document should run without error. 1 point deduction if most code runs without error, and 2 points deduction if more than 50% of the code throws an error. 
+
+## Main README (1 point)
+
+There should be a file named `README.md` at the top level of your repository. Its contents should automatically appear when you visit the repository on GitHub.
+
+Minimum contents of the README file:
+
+-   In a sentence or two, explains what this repository is, so that future-you or someone else stumbling on your repository can be oriented to the repository.
+-   In a sentence or two (or more??), briefly explains how to engage with the repository. You can assume the person reading knows the material from STAT 545A. Basically, if a visitor to your repository wants to explore your project, what should they know?
+
+Once you get in the habit of making README files, and seeing more README files in other projects, you'll wonder how you ever got by without them! They are tremendously helpful.
+
+## Output (1 point)
+
+All output is readable, recent and relevant:
+
+-   All Rmd files have been `knit`ted to their output md files. 
+-   All knitted md files are viewable without errors on Github. Examples of errors: Missing plots, "Sorry about that, but we can't show files that are this big right now" messages, error messages from broken R code
+-   All of these output files are up-to-date -- that is, they haven't fallen behind after the source (Rmd) files have been updated.
+-   There should be no relic output files. For example, if you were knitting an Rmd to html, but then changed the output to be only a markdown file, then the html file is a relic and should be deleted.
+
+(0.5 point deduction if any of the above criteria are not met. 1 point deduction if most or all of the above criteria are not met.)
+
+Our recommendation: right before submission, delete all output files, and re-knit each milestone's Rmd file, so that everything is up to date and relevant. Then, after your final commit and push to Github, CHECK on Github to make sure that everything looks the way you intended!
+
+## Tagged release (0.5 points)
+
+You've tagged a release for Milestone 1. 
+
+### Attribution
+
+Thanks to Icíar Fernández Boyano for mostly putting this together, and Vincenzo Coia for launching.
