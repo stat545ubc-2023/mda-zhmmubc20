@@ -2,16 +2,16 @@
 Mingming Zhang
 
 # Project Description  
-The purpose of this repository is to organize the files and code required to perform a mini data analyse for STAT 545. I will be primarily evaluating the cancer_sample dataset to perform a data analysis project to improve R and Github skills.
+The purpose of this folder is to organize the files and code required to perform a mini data analyse milestone 2 for STAT 545. I will be primarily evaluating the cancer_sample dataset to perform a data analysis project to improve R and Github skills.
 
 # Files Descrpition  
 __README.md__ provides a brief description of the author, intent, and files in this repository.  
 
-__.Rmd__ is an R markdown file that 
+__MDA_M2_MmZh.Rmd__ is an R markdown file that all the tasks completed in milestone 2
 
-__.Rmd__ is an R markdown file that 
+__MDA_M2_MmZh.md__ is file that knitted MDA_M2_MmZh file
 
-__output__ folder location for all files created during data analysis.
+__MDA_M2_MmZh_files__ is folder location for all files created during data analysis.
 
 # How to run the code:  
 * Open RStudio  
