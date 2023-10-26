@@ -690,7 +690,11 @@ Use the functions `saveRDS()` and `readRDS()`.
 <!-------------------------- Start your work below ---------------------------->
 
 ``` r
-rds_file <- file.path(output_file, "model.rds")
+if (!dir.exists("output")) {
+  dir.create("output")
+}
+rds_file <- file.path("output", "model.rds")
+saveRDS(t_test_result, rds_file)
 ```
 
 <!----------------------------------------------------------------------------->

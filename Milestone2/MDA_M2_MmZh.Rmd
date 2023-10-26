@@ -417,7 +417,13 @@ Write your model object from Task 3 to an R binary file (an RDS), and load it ag
 
 <!-------------------------- Start your work below ---------------------------->
 ```{r}
-rds_file <- file.path(output_file, "model.rds")
+
+if (!dir.exists("output")) {
+  dir.create("output")
+}
+rds_file <- file.path("output", "model.rds")
+saveRDS(t_test_result, rds_file)
+
 
 ```
 <!----------------------------------------------------------------------------->
